@@ -2,7 +2,7 @@
   <div id="app">
     <h1>
       <img src="./assets/logo.svg" alt="Enroller" class="logo">
-      System do zapisów na zajęcia
+      System do zapisów na zadajęcia
     </h1>
     <div v-if="authenticatedUsername">
       <h2>Witaj {{ authenticatedUsername }}!
@@ -12,9 +12,19 @@
     </div>
     <div v-else>
 
-      <button :class="isRegistering ? 'buton-outline' ">Zaloguj sie</button:>
-      <button>Zarejestruj się</button>
-      <login-form @login="login($event)"></login-form>
+      <button :class="isRegistering ? 'buton-outline' : ''"
+              @click="isRegistering = false">Zaloguj sie
+        </button>
+
+      <button :class="!isRegistering ? 'buton-outline' : ''"
+              @click="isRegistering = true">Zarejestruj się
+      </button>
+
+
+      <login-form @login="login($event)"
+        v-if="!isRegistering"></login-form>
+      <login-form @login="register($event)"
+      v-else></login-form>
     </div>
   </div>
 </template>
@@ -28,7 +38,7 @@
         components: {LoginForm, MeetingsPage},
         data() {
             return {
-                authenticatedUsername: ""
+                authenticatedUsername: "",
                 isRegistering: false
             };
         },
